@@ -5,10 +5,10 @@ import os
 import shutil
 import random
 
-main_folder     = "datasets\\severstal"
-image_folder    = 'images'
-csv_file        = 'train.csv'
-output_folder   = f"{main_folder}\\output"
+main_folder     = "path to project folder"
+image_folder    = 'image folder'
+csv_file        = '.csv file name'
+output_folder   = f"{main_folder}\\datasets"
 
 def convert_to_yolo_format(x1, y1, x2, y2, img_width, img_height, class_id):
 
