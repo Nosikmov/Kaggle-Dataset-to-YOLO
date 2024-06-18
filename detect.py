@@ -1,17 +1,24 @@
 from ultralytics import YOLO
 import cv2
+import os
 
-model = YOLO("path to runs folder/weights/best.pt")
+folder_files = 'path to folder with images'
+os.makedirs("output", exist_ok=True)
 
-img = cv2.imread("path to detect image")
+model = YOLO('path to best .bt file')
 
-results = model(img)
+def files_list(directory_path):
+    files_and_dirs = os.listdir(directory_path)
+    files = [f for f in files_and_dirs if os.path.isfile(os.path.join(directory_path, f))]
+    return files
 
-# Получить аннотированное изображение
-annotated_img = results[0].plot()
 
-# Сохранить изображение с предсказаниями
-output_path = 'output path .jpg'
-cv2.imwrite(output_path, annotated_img)
+for file in files_list(folder_files):
+    img = cv2.imread(folder_files + "/" + file)
+    results = model(img)
+    annotated_img = results[0].plot()
+    output_path = f'{folder_files}/output'
+    cv2.imwrite(f"output/{file}", annotated_img)
 
-print(f'Предсказание сохранено в {output_path}')
+
+print(f'Предсказание сохранено в output')
