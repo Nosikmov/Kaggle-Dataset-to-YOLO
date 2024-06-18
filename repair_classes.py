@@ -16,5 +16,5 @@ def adjust_class_indices(label_path):
             f.write('\n'.join(new_lines))
 
 # Adjust class indices in training and validation data
-adjust_class_indices('/datasets/train/labels')
-adjust_class_indices('/datasets/valid/labels')
+adjust_class_indices('datasets/train/labels')
+adjust_class_indices('datasets/valid/labels')
