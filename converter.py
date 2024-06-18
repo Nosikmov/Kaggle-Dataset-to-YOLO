@@ -5,10 +5,10 @@ import os
 import shutil
 import random
 
-main_folder     = "path to project folder"
-image_folder    = 'image folder'
-csv_file        = '.csv file name'
-output_folder   = f"{main_folder}\\datasets"
+main_folder     = "" #path to main folder
+image_folder    = 'images' #path to images file
+csv_file        = 'train.csv' #path to csv file
+output_folder   = "datasets" #path to datasets folder
 
 def convert_to_yolo_format(x1, y1, x2, y2, img_width, img_height, class_id):
 
@@ -22,7 +22,7 @@ def convert_to_yolo_format(x1, y1, x2, y2, img_width, img_height, class_id):
     center_y /= img_height
     width /= img_width
     height /= img_height
-    class_id = int(class_id) - 1
+
     return f"{class_id} {center_x:.6f} {center_y:.6f} {width:.6f} {height:.6f}\n"
 
 def draw_square_around_mask(image, mask, classid):
@@ -52,12 +52,12 @@ def rle_to_mask(rle_str, image_shape):
 
 
 os.makedirs(output_folder, exist_ok=True)
-os.makedirs(f"{output_folder}\\train", exist_ok=True)
-os.makedirs(f"{output_folder}\\valid", exist_ok=True)
-os.makedirs(f"{output_folder}\\train\\images", exist_ok=True)
-os.makedirs(f"{output_folder}\\train\\labels", exist_ok=True)
-os.makedirs(f"{output_folder}\\valid\\images", exist_ok=True)
-os.makedirs(f"{output_folder}\\valid\\labels", exist_ok=True)
+os.makedirs(f"{output_folder}/train", exist_ok=True)
+os.makedirs(f"{output_folder}/valid", exist_ok=True)
+os.makedirs(f"{output_folder}/train/images", exist_ok=True)
+os.makedirs(f"{output_folder}/train/labels", exist_ok=True)
+os.makedirs(f"{output_folder}/valid/images", exist_ok=True)
+os.makedirs(f"{output_folder}/valid/labels", exist_ok=True)
 
 
 
@@ -68,13 +68,13 @@ def txt_generator(image_name, file_text):
 def move_image(file_path, outputpah):
     shutil.copy(file_path, outputpah)
 
-with open(f"{main_folder}\\{csv_file}", 'r') as file:
+with open(f"{main_folder}{csv_file}", 'r') as file:
     csv_reader = csv.reader(file, delimiter=';')
     data_list = list(csv_reader)
 
     for row in data_list:
         try:
-            img_location = f"{main_folder}\\{image_folder}\\{row[0]}"
+            img_location = f"{main_folder}{image_folder}/{row[0]}"
             image =  cv2.imread(img_location)
             if row[1] != "0":
                 mask = rle_to_mask(row[2], image.shape[:2])
@@ -82,12 +82,12 @@ with open(f"{main_folder}\\{csv_file}", 'r') as file:
             else:
                 annotation = ""  
             if random.random() < 0.1:  # Вероятность 0.1 для попадания в valid
-                destination_folder = f"{output_folder}\\valid"
+                destination_folder = f"{output_folder}/valid"
             else:
-                destination_folder = f"{output_folder}\\train"
+                destination_folder = f"{output_folder}/train"
      
-            txt_generator(destination_folder + f"\\labels\\{row[0]}", annotation)
-            move_image(img_location, destination_folder + "\\images")
+            txt_generator(destination_folder + f"/labels/{row[0]}", annotation)
+            move_image(img_location, destination_folder + "/images")
         except Exception as e:
             print(f"Файл {row[0]}.", f"Ошибка {e}")
         #break
