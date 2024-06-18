@@ -10,4 +10,3 @@
 ![image](https://github.com/Nosikmov/Kaggle-Dataset-to-YOLO/assets/168178686/fa78a7ab-f9d8-4856-963c-78b9cd99f1bd)
 Запускаем скрипт и получаем новую папку output и дожидаемся окончания выполнения скрипта с сообщением «Программа завершена».
 В папке output должно появится две папки train и valid, а внутри labels и images, которые являются dataset’ом. 
-
