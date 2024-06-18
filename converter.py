@@ -22,7 +22,7 @@ def convert_to_yolo_format(x1, y1, x2, y2, img_width, img_height, class_id):
     center_y /= img_height
     width /= img_width
     height /= img_height
-
+    class_id = int(class_id) - 1
     return f"{class_id} {center_x:.6f} {center_y:.6f} {width:.6f} {height:.6f}\n"
 
 def draw_square_around_mask(image, mask, classid):
