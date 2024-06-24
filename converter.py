@@ -22,7 +22,7 @@ def convert_to_yolo_format(x1, y1, x2, y2, img_width, img_height, class_id):
     center_y /= img_height
     width /= img_width
     height /= img_height
-
+    class_id = int(class_id) - 1
     return f"{class_id} {center_x:.6f} {center_y:.6f} {width:.6f} {height:.6f}\n"
 
 def draw_square_around_mask(image, mask, classid):
@@ -30,7 +30,6 @@ def draw_square_around_mask(image, mask, classid):
     annotation_string = ""
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
-        #cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
         annotation_string += convert_to_yolo_format(x, y, x + w, y + h, image.shape[1], image.shape[0], classid)
 
     return annotation_string
