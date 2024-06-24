@@ -17,7 +17,6 @@ for file in files_list(folder_files):
     img = cv2.imread(folder_files + "/" + file)
     results = model(img)
     annotated_img = results[0].plot()
-    output_path = f'{folder_files}/output'
     cv2.imwrite(f"output/{file}", annotated_img)
 
 
